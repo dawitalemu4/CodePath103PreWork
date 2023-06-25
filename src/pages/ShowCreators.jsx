@@ -1,59 +1,64 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import supabase from '../client';
+import Creator from '../components/Creator';
 
-interface CreatorProps {
-    Name: string;
-    url: string;
-    description: string;
-    imageURL: string;
-}
+export default function ShowCreators() {
+  const [creators, setCreators] = useState([]);
 
-export default function ShowCreators( {Name, url, description, imageURL}) {
+  useEffect(() => {
+    async function fetchCreators() {
+      try {
+        const { data, error } = await supabase
+          .from('creators')
+          .select('id, name, url, description, imageURL');
 
-    const [creators, setCreators] = React.useState<CreatorProps[]>([]);
-
-useEffect(() => {
-    async function getCreators() {
-   
-       let { data: creators , error } = await supabase.from('creators').select('id');
-    //    const data = await response.json();
-    //    console.log(data);
-    //    const creators = data.map((creator: any) => {
-    //           return (
-    //             <div id='Creator'>
-    //                  <h1>{creator.Name}</h1>
-    //                  <p>{creator.url}</p>
-    //                  <p>{creator.description}</p>
-    //                  <img src={creator.imageURL}/>
-    //             </div>
-    //           )
-    //      });
-    //         console.log(creators);
-    //         for (let i = 0; i < creators.length; i++) {
-    //             document.getElementById('ShowCreators')!.innerHTML += creators[i];
-    //         }
-
-        if (error) console.log('error', error);
-        else setCreators(creators);
-       
+        if (error) {
+          console.log('error', error);
+        } else {
+          setCreators(data);
+        }
+      } catch (error) {
+        console.log('error', error);
+      }
     }
-    getCreators();
-}, []);
 
-    return (
-       
-            <div id='ShowCreators'>
-                {creators.map((creator: CreatorProps) => {
-                    return (
-                        <div id='Creator'>
-                            <h1>{creator.Name}</h1>
-                            <p>{creator.url}</p>
-                            <p>{creator.description}</p>
-                            <img src={creator.imageURL}/>
-                        </div>
-                    )
-                }
-                )}
-            </div>
-        
-    )
+    fetchCreators();
+  }, []);
+
+  return (
+    <div id='ShowCreators'>
+      <h2>All Creators</h2>
+      {creators.map((creator) => (
+        <div key={creator.id}>
+          <Creator creator={creator} />
+          <Link to={`/edit-creator/${creator.id}`}>
+            <button>Edit</button>
+          </Link>
+        </div>
+      ))}
+
+      <style>
+        {`
+          #ShowCreators {
+            text-align: center;
+          }
+
+          h2 {
+            margin-bottom: 20px;
+          }
+
+          button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+        `}
+      </style>
+    </div>
+  );
 }
