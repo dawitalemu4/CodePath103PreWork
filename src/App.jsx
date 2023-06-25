@@ -22,7 +22,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">
@@ -34,4 +34,8 @@ function App() {
 
 export default App
 
-//pw: codepath103!
+/*<Route path="/" element={<Home />} title="Home | CreatorVerse" />
+        <Route path="/add-creator" element={<AddCreator />} title="Add Creator | CreatorVerse" />
+        <Route path="/edit-creator/:id" element={<EditCreator />} title="Edit Creator | CreatorVerse" />
+        <Route path="/show-creators" element={<ShowCreators />} title="Show Creators | CreatorVerse" />
+        <Route path="/view-creator/:id" element={<ViewCreator />} title="View Creator | CreatorVerse" /> */
