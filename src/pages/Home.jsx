@@ -111,10 +111,10 @@ export default function Home() {
           #HomeBackgroundImage {
             display: flex;
             position: absolute;
-            width: 350%;
+            width: 130%;
             height: 100%;
             object-fit: cover;
-            filter: blur(10px);
+            filter: blur(7px);
             overflow: hidden;
           }
 
