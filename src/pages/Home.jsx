@@ -125,7 +125,7 @@ export default function Home() {
             height: 35%;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
           }
 
