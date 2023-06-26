@@ -11,7 +11,7 @@ export default function ViewCreator() {
       async function getCreator() {
         let { data, error } = await supabase
           .from('creators')
-          .select('name, url, description, imageURL')
+          .select('name, Youtube, Twitter, Instagram, description, imageURL')
           .eq('id', id)
           .single();
   
