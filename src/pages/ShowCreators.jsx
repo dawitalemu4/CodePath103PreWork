@@ -134,7 +134,7 @@ export default function ShowCreators() {
             display: flex;
             position: relative; 
             width: 100%;
-            color: white;
+            color: white; 
             font-size: 2.5rem;
             background-color: transparent;
             border: none;
