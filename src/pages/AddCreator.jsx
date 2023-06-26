@@ -3,7 +3,9 @@ import supabase from '../client';
 
 export default function AddCreator() {
   const [name, setName] = useState('');
-  const [url, setURL] = useState('');
+  const [Youtube, setYoutube] = useState('');
+  const [Twitter, setTwitter] = useState('');
+  const [Instagram, setInstagram] = useState('');
   const [description, setDescription] = useState('');
   const [imageURL, setImageURL] = useState('');
 
@@ -11,7 +13,7 @@ export default function AddCreator() {
     event.preventDefault();
 
     try {
-      const { data, error } = await supabase.from('creators').insert([{ name, url, description, imageURL }]);
+      const { data, error } = await supabase.from('creators').insert([{ name, Youtube, Twitter, Instagram, description, imageURL }]);
 
         console.log('data:', data);
 
@@ -34,8 +36,14 @@ export default function AddCreator() {
       <label htmlFor='name'>Name:</label>
       <input type='text' id='name' value={name} onChange={(e) => setName(e.target.value)} required />
 
-      <label htmlFor='url'>URL:</label>
-      <input type='text' id='url' value={url} onChange={(e) => setURL(e.target.value)} required />
+      <label htmlFor='Youtube'>Youtube:</label>
+      <input type='text' id='Youtube' value={Youtube} onChange={(e) => setYoutube(e.target.value)} required />
+      
+      <label htmlFor='Twitter'>Twitter:</label>
+      <input type='text' id='Twitter' value={Twitter} onChange={(e) => setTwitter(e.target.value)} required />
+
+      <label htmlFor='Instagram'>Instagram:</label>
+      <input type='text' id='Instagram' value={Instagram} onChange={(e) => setInstagram(e.target.value)} required />
 
       <label htmlFor='description'>Description:</label>
       <textarea id='description' value={description} onChange={(e) => setDescription(e.target.value)} required />

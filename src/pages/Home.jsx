@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import supabase from '../client';
 import Creator from '../components/Creator';
+import backgroundImage from '../assets/background.gif';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
 
 export default function Home() {
   const [recentCreators, setRecentCreators] = useState([]);
@@ -11,7 +13,7 @@ export default function Home() {
       try {
         const { data, error } = await supabase
           .from('creators')
-          .select('id, name, url, description, imageURL')
+          .select('id, name, Youtube, Twitter, Instagram, description, imageURL')
           .order('id', { ascending: false })
           .limit(2);
 
@@ -30,57 +32,244 @@ export default function Home() {
 
   return (
     <div id='Home'>
-      <h1>Welcome to the Home Page</h1>
-
-      <div id='RecentCreators'>
-        <h2>Recent Creators</h2>
-        {recentCreators.map((creator) => (
-          <div key={creator.id}>
-            <Creator creator={creator} />
-            <Link to={`/edit-creator/${creator.id}`}>
-              <button>Edit</button>
-            </Link>
+      <div id='HomeContainer'>
+        <div id='BackgroundContainer'>
+          <img id='BackgroundImage' src={backgroundImage} />
+          <div id='HomeHeaderContainer'>
+            <p id='HomeHeader'>CreatorVerse</p>
           </div>
-        ))}
-      </div>
+          
+          <div id='OptionButtonsContainer'>
+            <div id='AddCreatorContainer'>
+              <Link to='/add-creator'>
+                <button id='AddCreator'>Add Creator</button>
+              </Link>
+            </div>
+            <div id='ShowCreatorContainer'>
+              <Link to='/show-creators'>
+                <button id='ShowCreator'>View All Creators</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div id='RecentContainer'>
+          <div id='RecentHeaderContainer'>
+            <p id='RecentHeader'>Recent Creators</p>
+          </div>
+          <div id='RecentCreatorsContainer'>
+            {recentCreators.map((creator) => (
+              <div key={creator.id}>
+                <Creator creator={creator} />
+                <div id='RecentButtonsContainer'>
+                  <Link to={`/edit-creator/${creator.id}`}>
+                    <button id='EditButton'><HiOutlinePencilAlt/></button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-      <div id='Buttons'>
-        <Link to='/add-creator'>
-          <button>Create Creator</button>
-        </Link>
-        <Link to='/show-creators'>
-          <button>View All Creators</button>
-        </Link>
       </div>
-
       <style>
         {`
           #Home {
-            text-align: center;
-          }
-
-          h1 {
-            margin-bottom: 20px;
-          }
-
-          #RecentCreators {
-            margin-bottom: 20px;
-          }
-
-          #Buttons {
             display: flex;
-            justify-content: center;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+          }
+          #HomeContainer {
+            display: flex;
+            position: relative;
+            display: flex;
+            position: relative;
+            width: 90%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
           }
 
-          button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
+          #BackgroundContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 40%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+
+          #BackgroundImage {
+            display: flex;
+            position: absolute;
+            width: 350%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(10px);
+            overflow: hidden;
+          }
+
+          #HomeHeaderContainer {
+            display: flex;
+            position: relative;
+            width: 420px;
+            height: 35%;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+          }
+
+          #HomeHeader {
+            display: flex;
+            position: relative;
+            font-family: 'InterBold';
+            font-size: 55px;
+          }
+
+          #OptionButtonsContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 50%;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+            gap: 20px;
+          }
+
+          #AddCreatorContainer {
+            display: flex;
+            position: relative;
+            width: 45%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+          }
+
+          #AddCreator {
+            display: flex;
+            position: relative;
+            width: 180px;
+            height: 60px;
+            justify-content: center;
+            align-items: center;
+            text-decoration: underline;
+            text-decoration-color: #1564b0;
+            color: white;
+            font-family: 'InterSemi';
+            font-size: 15px;
+            background-color: #1564b0;
+            border: 1px solid black;
+            border-radius: 20px;
+          }
+
+          #ShowCreatorContainer {
+            display: flex;
+            position: relative; 
+            width: 45%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+          }
+
+          #ShowCreator {
+            display: flex;
+            position: relative;
+            width: 180px;
+            height: 60px;
+            justify-content: center;
+            align-items: center;
+            text-decoration: underline;
+            text-decoration-color: #1564b0;
+            color: white;
+            font-family: 'InterSemi';
+            font-size: 15px;
+            background-color: #1564b0;
+            border: 1px solid black;
+            border-radius: 20px;
+          }
+
+          #AddCreator:hover, #ShowCreator:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transform: scale(1.1);
+            transition: transform 0.2s ease-in-out;
+          }
+
+          #RecentContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 60%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; 
+          }
+
+          #RecentHeaderContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 25%;
+            justify-content: center;
+            align-items: center;
+          }
+
+          #RecentHeader {
+            display: flex;
+            position: relative;
+            font-family: 'InterSemi';
+            font-size: 2.5rem;
+          }
+
+          #RecentCreatorsContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 80%;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+          }
+
+          #RecentButtonsContainer {
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 70px;
+            justify-content: center;
+            align-items: center;
+          }
+
+          #EditButton {
+            display: flex;
+            position: relative; 
+            width: 100%;
+            color: #1564b0;
+            font-size: 2rem;
+            background-color: transparent;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
           }
+
+          @media (max-width: 1300px) {
+            #RecentCreatorsContainer {
+              flex-direction: column;
+              justify-content: center;
+            }
+          }
+
+          @media (max-width: 400px) {
+            #HomeHeaderContainer {
+              width: 380px;
+            }
+          }
+
         `}
       </style>
     </div>

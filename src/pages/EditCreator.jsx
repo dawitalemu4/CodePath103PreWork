@@ -5,7 +5,9 @@ import supabase from '../client';
 export default function EditCreatorForm() {
   const { id } = useParams();
   const [name, setName] = useState('');
-  const [url, setURL] = useState('');
+  const [Youtube, setYoutube] = useState('');
+  const [Twitter, setTwitter] = useState('');
+  const [Instagram, setInstagram] = useState('');
   const [description, setDescription] = useState('');
   const [imageURL, setImageURL] = useState('');
 
@@ -14,7 +16,7 @@ export default function EditCreatorForm() {
       try {
         const { data, error } = await supabase
           .from('creators')
-          .select('name, url, description, imageURL')
+          .select('name, Youtube, Twitter, Instagram, description, imageURL')
           .eq('id', id)
           .single();
 
@@ -22,7 +24,9 @@ export default function EditCreatorForm() {
           console.log('error', error);
         } else {
           setName(data.name);
-          setURL(data.url);
+          setYoutube(data.Youtube);
+          setTwitter(data.Twitter);
+          setInstagram(data.Instagram);
           setDescription(data.description);
           setImageURL(data.imageURL);
         }
@@ -40,15 +44,29 @@ export default function EditCreatorForm() {
     try {
       const { data, error } = await supabase
         .from('creators')
-        .update({ name, url, description, imageURL })
+        .update({ name, Youtube, Twitter, Instagram, description, imageURL })
         .eq('id', id);
 
-        console.log('data:', data);
+        console.log(data);
 
       if (error) {
         console.log('error', error);
       } else {
         console.log('Creator updated successfully');
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const { error } = await supabase.from('creators').delete().eq('id', id);
+
+      if (error) {
+        console.log('error', error);
+      } else {
+        console.log('Creator deleted successfully');
       }
     } catch (error) {
       console.log('error', error);
@@ -62,8 +80,14 @@ export default function EditCreatorForm() {
         <label htmlFor='name'>Name:</label>
         <input type='text' id='name' value={name} onChange={(e) => setName(e.target.value)} required />
 
-        <label htmlFor='url'>URL:</label>
-        <input type='text' id='url' value={url} onChange={(e) => setURL(e.target.value)} required />
+        <label htmlFor='Youtube'>Youtube:</label>
+        <input type='text' id='Youtube' value={Youtube} onChange={(e) => setYoutube(e.target.value)} required />
+
+        <label htmlFor='Twitter'>Twitter:</label>
+        <input type='text' id='Twitter' value={Twitter} onChange={(e) => setTwitter(e.target.value)} required />
+
+        <label htmlFor='Instagram'>Instagram:</label>
+        <input type='text' id='Instagram' value={Instagram} onChange={(e) => setInstagram(e.target.value)} required />
 
         <label htmlFor='description'>Description:</label>
         <textarea id='description' value={description} onChange={(e) => setDescription(e.target.value)} required />
@@ -72,6 +96,7 @@ export default function EditCreatorForm() {
         <input type='text' id='imageURL' value={imageURL} onChange={(e) => setImageURL(e.target.value)} required />
 
         <button type='submit'>Update</button>
+        <button type='button' onClick={handleDelete}>Delete</button>
       </form>
       <style>
         {`

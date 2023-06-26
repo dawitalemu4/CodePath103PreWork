@@ -11,7 +11,7 @@ export default function ShowCreators() {
       try {
         const { data, error } = await supabase
           .from('creators')
-          .select('id, name, url, description, imageURL');
+          .select('id, name, Youtube, Twitter, Instagram, description, imageURL');
 
         if (error) {
           console.log('error', error);
