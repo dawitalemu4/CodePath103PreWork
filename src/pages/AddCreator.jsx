@@ -115,7 +115,7 @@ export default function AddCreator() {
         #AddBackgroundImage {
           display: flex;
           position: absolute;
-          width: 350%;
+          width: 130%;
           height: 100%;
           object-fit: cover;
           filter: blur(10px);
@@ -129,7 +129,7 @@ export default function AddCreator() {
           height: 35%;
           justify-content: center;
           align-items: center;
-          background-color: rgba(0, 0, 0, 0.8);
+          background-color: rgba(0, 0, 0, 0.2);
           border-radius: 20px;
         }
 
