@@ -1,2 +1,2 @@
 # CodePath103PreWork
-This repo contains a website called CreatorVerse I made for CodePath Web Development 103 course's prework. Uses React, JavaScript, and Supabase.
+This repo contains a full-stack website called CreatorVerse I made for CodePath Web Development 103 course's prework. Uses React, JavaScript, and Supabase. Finished in under 8 hours of dev time.

@@ -4,6 +4,7 @@ import supabase from '../client';
 import Creator from '../components/Creator';
 import backgroundImage from '../assets/background.gif';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 export default function Home() {
   const [recentCreators, setRecentCreators] = useState([]);
@@ -33,8 +34,8 @@ export default function Home() {
   return (
     <div id='Home'>
       <div id='HomeContainer'>
-        <div id='BackgroundContainer'>
-          <img id='BackgroundImage' src={backgroundImage} />
+        <div id='HomeBackgroundContainer'>
+          <img id='HomeBackgroundImage' src={backgroundImage} />
           <div id='HomeHeaderContainer'>
             <p id='HomeHeader'>CreatorVerse</p>
           </div>
@@ -52,6 +53,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
         <div id='RecentContainer'>
           <div id='RecentHeaderContainer'>
             <p id='RecentHeader'>Recent Creators</p>
@@ -61,6 +63,9 @@ export default function Home() {
               <div key={creator.id}>
                 <Creator creator={creator} />
                 <div id='RecentButtonsContainer'>
+                  <Link to={`/view-creator/${creator.id}`}>
+                    <button id='InfoButton'><AiOutlineInfoCircle/></button>
+                  </Link>
                   <Link to={`/edit-creator/${creator.id}`}>
                     <button id='EditButton'><HiOutlinePencilAlt/></button>
                   </Link>
@@ -69,8 +74,8 @@ export default function Home() {
             ))}
           </div>
         </div>
-
       </div>
+
       <style>
         {`
           #Home {
@@ -93,7 +98,7 @@ export default function Home() {
             align-items: center;
           }
 
-          #BackgroundContainer {
+          #HomeBackgroundContainer {
             display: flex;
             position: relative;
             width: 100%;
@@ -103,7 +108,7 @@ export default function Home() {
             flex-direction: column;
           }
 
-          #BackgroundImage {
+          #HomeBackgroundImage {
             display: flex;
             position: absolute;
             width: 350%;
@@ -215,7 +220,7 @@ export default function Home() {
             display: flex;
             position: relative;
             width: 100%;
-            height: 25%;
+            height: 20%;
             justify-content: center;
             align-items: center;
           }
@@ -235,6 +240,8 @@ export default function Home() {
             justify-content: space-between;
             align-items: center;
             flex-direction: row;
+            overflow: hidden;
+            padding: 10% 2%;
           }
 
           #RecentButtonsContainer {
@@ -250,17 +257,55 @@ export default function Home() {
             display: flex;
             position: relative; 
             width: 100%;
-            color: #1564b0;
+            color: #7ab6f0;
             font-size: 2rem;
             background-color: transparent;
             border: none;
             cursor: pointer;
+            margin-bottom: 10px;
+          }
+
+          #EditButton:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transform: scale(1.1);
+            transition: transform 0.2s ease-in-out;
+          }
+
+          #InfoButton {
+            display: flex;
+            position: relative; 
+            width: 100%;
+            color: #7ab6f0;
+            font-size: 2rem;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+          }
+
+          #InfoButton:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            transform: scale(1.1);
+            transition: transform 0.2s ease-in-out;
           }
 
           @media (max-width: 1300px) {
             #RecentCreatorsContainer {
               flex-direction: column;
-              justify-content: center;
+              justify-content: flex-start;
+              padding: 0 2%;
+              overflow: scroll;
+            }
+            #RecentCreatorsContainer::-webkit-scrollbar {
+              width: 5px;
+              height: 5px;
+              background-color: #171717;
+            }
+            #RecentCreatorsContainer::-webkit-scrollbar-thumb {
+              background-color: white;
+              border-radius: 10px;
             }
           }
 

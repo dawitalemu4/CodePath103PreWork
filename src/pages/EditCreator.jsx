@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import supabase from '../client';
+import { Link } from 'react-router-dom';
+import backgroundImage from '../assets/background.gif';
+import { AiOutlineHome } from 'react-icons/ai';
 
 export default function EditCreatorForm() {
   const { id } = useParams();
@@ -10,6 +13,10 @@ export default function EditCreatorForm() {
   const [Instagram, setInstagram] = useState('');
   const [description, setDescription] = useState('');
   const [imageURL, setImageURL] = useState('');
+
+  const redirect = () => {
+    window.location.href = '/';
+  };
 
   useEffect(() => {
     async function fetchCreator() {
@@ -49,11 +56,20 @@ export default function EditCreatorForm() {
 
         console.log(data);
 
+        redirect();
+
       if (error) {
         console.log('error', error);
       } else {
         console.log('Creator updated successfully');
+        setName(data.name);
+        setYoutube(data.Youtube);
+        setTwitter(data.Twitter);
+        setInstagram(data.Instagram);
+        setDescription(data.description);
+        setImageURL(data.imageURL);
       }
+      redirect();
     } catch (error) {
       console.log('error', error);
     }
@@ -68,75 +84,249 @@ export default function EditCreatorForm() {
       } else {
         console.log('Creator deleted successfully');
       }
+      redirect();
     } catch (error) {
       console.log('error', error);
     }
   };
 
   return (
-    <div>
-      <h2>Edit Creator</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='name'>Name:</label>
-        <input type='text' id='name' value={name} onChange={(e) => setName(e.target.value)} required />
+    <div id='EditCreator'>
+      <div id='EditCreatorContainer'>
+        <div id='EditCreatorBackgroundContainer'>
+          <img id='EditBackgroundImage' src={backgroundImage} />
 
-        <label htmlFor='Youtube'>Youtube:</label>
-        <input type='text' id='Youtube' value={Youtube} onChange={(e) => setYoutube(e.target.value)} required />
+          <div id='EditCreatorHeaderContainer'>
+            <p id='EditCreatorHeader'>Edit Creator</p>
+          </div>
+        </div>
 
-        <label htmlFor='Twitter'>Twitter:</label>
-        <input type='text' id='Twitter' value={Twitter} onChange={(e) => setTwitter(e.target.value)} required />
+      <div id='HomeButtonContainer'>
+        <Link to='/'>
+          <button id='HomeButton'><AiOutlineHome/></button>
+        </Link>
+      </div>
 
-        <label htmlFor='Instagram'>Instagram:</label>
-        <input type='text' id='Instagram' value={Instagram} onChange={(e) => setInstagram(e.target.value)} required />
+      <div id='EditCreatorFormContainer'>
+        <form id='EditCreatorForm' onSubmit={handleSubmit}>
 
-        <label htmlFor='description'>Description:</label>
-        <textarea id='description' value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <div id='EditCreatorFormInputContainer'>
+            <div id='LeftContainer'>
+              <input type='text' id='name' placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} required />
 
-        <label htmlFor='imageURL'>Image URL:</label>
-        <input type='text' id='imageURL' value={imageURL} onChange={(e) => setImageURL(e.target.value)} required />
+              <input type='text' id='description' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} required />
+              
+              <input type='text' id='Youtube' placeholder='Youtube' value={Youtube} onChange={(e) => setYoutube(e.target.value)} required />
+            </div>
 
-        <button type='submit'>Update</button>
-        <button type='button' onClick={handleDelete}>Delete</button>
-      </form>
-      <style>
-        {`
-          #EditCreatorForm {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            <div id='RightContainer'>
+              <input type='text' id='Twitter' placeholder='Twitter' value={Twitter} onChange={(e) => setTwitter(e.target.value)} required />
+
+              <input type='text' id='Instagram' placeholder='Instagram' value={Instagram} onChange={(e) => setInstagram(e.target.value)} required />
+
+              <input type='text' id='imageURL' placeholder='Image URL' value={imageURL} onChange={(e) => setImageURL(e.target.value)} required />
+            </div>
+          </div>
+          
+          <div id='EditCreatorFormButtonContainer'>
+              <button type='submit' id='EditCreatorFormButton'>Edit Creator</button>
+              <button type='button' id='EditCreatorFormButton' onClick={handleDelete}>Delete</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <style>
+      {`
+        #EditCreator {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          align-items: center;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        #EditCreatorContainer {
+          display: flex;
+          position: relative;
+          width: 90%;
+          height: 100%;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #EditCreatorBackgroundContainer {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 40%;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+
+        #EditBackgroundImage {
+          display: flex;
+          position: absolute;
+          width: 350%;
+          height: 100%;
+          object-fit: cover;
+          filter: blur(10px);
+          overflow: hidden;
+        }
+
+        #EditCreatorHeaderContainer {
+          display: flex;
+          position: relative;
+          width: 420px;
+          height: 35%;
+          justify-content: center;
+          align-items: center;
+          background-color: rgba(0, 0, 0, 0.8);
+          border-radius: 20px;
+        }
+
+        #EditCreatorHeader {
+          display: flex;
+          position: relative;
+          font-family: 'InterBold';
+          font-size: 55px;
+        }
+
+        #HomeButtonContainer {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 13%;
+          justify-content: center;
+          align-items: center;
+          border: none;
+        }
+
+        #HomeButton { 
+          display: flex;
+          position: relative;
+          width: 100%;
+          color: white;
+          font-size: 2.5rem;
+          background-color: transparent;
+          border: none;
+          padding-top: 15%;
+          cursor: pointer;
+        }
+
+        #HomeButton:hover {
+          opacity: 0.9;
+          transform: scale(1.1);
+          transition: transform 0.2s ease-in-out;
+        }
+
+        #EditCreatorFormContainer {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 45%;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+
+        #EditCreatorForm {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 100%;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+        }
+
+        #EditCreatorFormInputContainer {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 90%;
+          flex-direction: row;
+          justify-content: space-evenly;
+          align-items: space-between;
+        }
+
+        #LeftContainer {
+          display: flex;
+          position: relative;
+          width: 50%;
+          height: 100%;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+        }
+
+        #RightContainer {
+          display: flex;
+          position: relative;
+          width: 50%;
+          height: 100%;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: center;
+        }
+
+        #EditCreatorForm input {
+          display: flex;
+          position: relative;
+          width: 90%;
+          height: 20%;
+          font-size: 18px;
+          border-radius: 10px;
+          padding-left: 10px;
+        }
+
+        #EditCreatorFormButtonContainer {
+          display: flex;
+          position: relative;
+          width: 100%;
+          height: 15%;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        #EditCreatorFormButton {
+          display: flex;
+          position: relative;
+          width: 160px;
+          height: 60px;
+          font-size: 18px;
+          border-radius: 25px;
+          background-color: #7ab6f0;
+          text-decoration: underline;
+          text-decoration-color: #7ab6f0;
+          color: black;
+          font-family: 'InterSemi';
+          justify-content: center;
+          align-items: center;
+          border: 1px solid black;
+          cursor: pointer;
+        }
+
+        #EditCreatorFormButton:hover {
+          opacity: 0.9;
+          transform: scale(1.1);
+          transition: transform 0.2s ease-in-out;
+        }
+
+        @media (max-width: 400px) {
+          #EditCreatorHeaderContainer {
+            width: 380px;
           }
-
-          h2 {
-            margin-bottom: 10px;
+          #HomeButton {
+            padding-top: 10%;
           }
-
-          form {
-            display: flex;
-            flex-direction: column;
-          }
-
-          label {
-            margin-bottom: 5px;
-          }
-
-          input,
-          textarea {
-            padding: 10px;
-            margin-bottom: 10px;
-          }
-
-          button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-        `}
-      </style>
+        }
+      `}
+    </style>
     </div>
   );
 }
