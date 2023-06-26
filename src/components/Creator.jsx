@@ -33,6 +33,7 @@ export default function Creator({ creator }) {
                 position: relative;
                 width: 600px;
                 height: 300px;
+                margin-top: 3%;
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
@@ -136,6 +137,9 @@ export default function Creator({ creator }) {
                 position: relative;
                 color: #1564b0;
             }
+            #link:hover {
+                opacity: 0.8;
+            }
             #YoutubeIcon {
                 color: red;
             }
@@ -147,7 +151,7 @@ export default function Creator({ creator }) {
             }
             @media (max-width: 600px) {
                 #Creator {
-                    width: 100%;
+                    width: 99.6%;
                 }
             }
         `}
